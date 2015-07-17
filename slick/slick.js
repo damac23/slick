@@ -1186,6 +1186,10 @@
             _.initializeEvents();
             _.updateArrows();
             _.updateDots();
+// FIXME: Test for screen-dependent-lazy-loading
+if (_.options.lazyLoad === 'ondemand') {
+    _.lazyLoad();
+}
 
         }
 
@@ -1332,8 +1336,9 @@
             loadRange, cloneRange, rangeStart, rangeEnd;
 
         function loadImages(imagesScope) {
-            $('img[data-lazy]', imagesScope).each(function() {
-
+// FIXME: Test for screen-dependent-lazy-loading
+// the :visible won't work on the first init-run
+            $('img[data-lazy]:visible', imagesScope).each(function() {
                 var image = $(this),
                     imageSource = $(this).attr('data-lazy'),
                     imageToLoad = document.createElement('img');
@@ -1632,6 +1637,10 @@
             _.windowDelay = window.setTimeout(function() {
                 _.windowWidth = $(window).width();
                 _.checkResponsive();
+// FIXME: Test for screen-dependent-lazy-loading
+if (_.options.lazyLoad === 'ondemand') {
+    _.lazyLoad();
+}
                 if( !_.unslicked ) { _.setPosition(); }
             }, 50);
         }
